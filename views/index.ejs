@@ -1,0 +1,136 @@
+<%- include("partials/header.ejs") %> <% if (formDataArray.length > 0) {%>
+<div class="container col-sm-12 my-5">
+  <div class="container">
+    <header
+      class="d-flex flex-wrap align-items-center justify-content-around pb-2 mb-4 border-warning border-bottom"
+    >
+      <div class="col-md-3 mb-2 mb-md-0">
+        <nav class="navbar">
+          <div class="container-fluid">
+            <p class="navbar-brand mb-0 h1 josefin">Recent Posts</p>
+          </div>
+        </nav>
+      </div>
+
+      <div class="col-md-3 text-end">
+        <button
+          type="button"
+          class="navbuts btn btn-transparent me-2 edit"
+          data-bs-toggle="modal"
+          data-bs-target="#editModal"
+        >
+          Edit
+        </button>
+
+        <div
+          class="modal fade"
+          id="editModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalCenterTitle">
+                  Enter your Publishing Email
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form action="/edit" method="post">
+                  <div
+                    class="d-flex row justify-content-sm-evenly align-items-center"
+                  >
+                    <div class="col-sm-10">
+                      <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        id="Email"
+                        placeholder="name@example.com"
+                      />
+                    </div>
+                    <div class="col-sm-2">
+                      <button type="submit" class="btn btn-outline-danger">
+                        Edit
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="navbuts btn btn-transparent">
+          Delete
+        </button>
+      </div>
+    </header>
+  </div>
+
+  <div class="d-flex row justify-content-sm-evenly">
+    <% for (let i = formDataArray.length - 1; i >= 0 && (formDataArray.length -
+    1 - i < 6); i--) { %>
+    <div class="m-2 px-5 py-5 col-lg-5 rounded-3 posts">
+      <h2 class="title josefin"><%= formDataArray[i].title %></h2>
+      <p class="lead py-2 content">
+        <%= formDataArray[i].content.length > 200 ?
+        formDataArray[i].content.substring(0, 200) + ' .....' :
+        formDataArray[i].content %>
+      </p>
+      <p class="author pt-2 josefin">
+        <strong>Author:</strong> <%= formDataArray[i].firstName + " " +
+        formDataArray[i].lastName %>
+      </p>
+      <p class="createdon lead">
+        <strong>Created on: </strong> <%= formDataArray[i].dateTime %>
+      </p>
+    </div>
+    <% } %>
+  </div>
+
+  <% if (formDataArray.length > 6) { %>
+  <div class="showmore text-center my-3">
+    <button type="submit" class="my-3 btn btn-transparent">
+      View More Posts >>
+    </button>
+  </div>
+  <% } %>
+</div>
+
+<%} else { %>
+<div class="container mt-5">
+  <header
+    class="d-flex flex-wrap align-items-center justify-content-around pb-2 mb-4 border-warning border-bottom"
+  >
+    <div class="col-md-3 mb-2 mb-md-0">
+      <nav class="navbar">
+        <div class="container-fluid">
+          <p class="navbar-brand mb-0 h1 josefin">Recent Posts</p>
+        </div>
+      </nav>
+    </div>
+
+    <div class="col-md-3 text-end">
+      <button type="button" class="navbuts btn btn-transparent me-2" disabled>
+        Edit
+      </button>
+      <button type="button" class="navbuts btn btn-transparent" disabled>
+        Delete
+      </button>
+    </div>
+  </header>
+</div>
+<div class="container my-5">
+  <div class="p-5 text-center rounded-3 posts">
+    <h1 class="text-body-emphasis">No Posts to show</h1>
+  </div>
+</div>
+<% } %> <%- include("partials/footer.ejs") %>
